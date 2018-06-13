@@ -11,8 +11,9 @@
     "sails-disk": "~0.10.9"
   },
   "scripts": {
-    "debug": "node debug app.js",
-    "start": "node app.js"
+    "back": "node server",
+    "build": "gulp build",
+    "front": "gulp serve"
   },
   "main": "app.js",
   "repository": {
@@ -21,5 +22,28 @@
   },
   "author": "Brandy Lee Camacho",
   "linkedIn": "https://www.linkedin.com/in/brandycamacho/",
-  "email": "brandy@udacity.com"
+  "email": "brandy@udacity.com",
+  "devDependencies": {
+    "autoprefixer": "^8.6.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "browser-sync": "^2.24.4",
+    "compression": "^1.7.2",
+    "css-mqpacker": "^6.0.2",
+    "del": "^3.0.0",
+    "eslint": "^4.19.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-csso": "^3.0.1",
+    "gulp-plumber": "^1.2.0",
+    "gulp-postcss": "^7.0.1",
+    "gulp-rename": "^1.2.3",
+    "gulp-responsive": "^2.10.0",
+    "gulp-sass": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-svgmin": "^1.2.4",
+    "gulp-uglify": "^3.0.0",
+    "run-sequence": "^2.2.1"
+  }
 }
