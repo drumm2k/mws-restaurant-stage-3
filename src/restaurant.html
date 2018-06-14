@@ -54,6 +54,44 @@
       <ul id="reviews-list"></ul>
     </section>
     <!-- End reviews -->
+    <section id="add-review-container">
+      <h2 tabindex="0">Add Review</h2>
+      <form id="add-review-form" action="">
+        <div class="add-review__item">
+          <label class="add-review__item-label" for="reviewer">Name</label>
+          <input type="text" aria-label="Reviewers Name" name="reviewer" id="reviewer" required>
+        </div>
+
+        <div class="add-review__item, add-review__item-rating">
+          <span class="add-review__item-label">Rating</span>
+          <fieldset class="rating">
+            <input name="rating" id="rating1" type="radio" value="1" required>
+            <label class="rating-star" for="rating1" title="1 star" aria-label="Rate 1 star" tabindex="0">★</label>
+            
+            <input name="rating" id="rating2" type="radio" value="2">
+            <label class="rating-star" for="rating2" title="2 stars" aria-label="Rate 2 stars" tabindex="0">★</label>
+            
+            <input name="rating" id="rating3" type="radio" value="3">
+            <label class="rating-star" for="rating3" title="3 stars" aria-label="Rate 3 stars" tabindex="0">★</label>
+            
+            <input name="rating" id="rating4" type="radio" value="4">
+            <label class="rating-star" for="rating4" title="4 stars" aria-label="Rate 4 stars" tabindex="0">★</label>
+            
+            <input name="rating" id="rating5" type="radio" value="5">
+            <label class="rating-star" for="rating5" title="5 stars" aria-label="Rate 5 stars" tabindex="0">★</label>
+          </fieldset>
+        </div>
+
+        <div class="add-review__item">
+          <label class="add-review__item-label" for="review">Review</label>
+          <textarea rows="5" cols="20" aria-label="Review Text" name="review" id="review" required></textarea>
+        </div>
+
+        <div class="add-review__item">
+          <button class="add-review__item-submit" aria-label="Submit Review" id="submitButton" type="submit">Submit</button>
+        </div>
+      </form>
+    </section>
   </main>
   <!-- End main -->
 
@@ -62,7 +100,6 @@
     Copyright (c) 2017 <a href="/" alt="Restaurant Reviews"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
   </footer>
   <!-- End footer -->
-
   <!-- Beginning scripts -->
   <script type="application/javascript" charset="utf-8" src="js/rest.js"></script>
   <!-- Google Maps -->

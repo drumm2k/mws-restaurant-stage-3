@@ -171,12 +171,12 @@ const createRestaurantHTML = (restaurant) => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.setAttribute('data-src', '/img/' + restaurant.id + '-400.jpg');
-  image.alt = restaurant.name + " Restaurant";
+  image.alt = restaurant.name + ' Restaurant';
   picture.append(image);
 
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;
-  name.tabIndex = "0";
+  name.tabIndex = '0';
   li.append(name);
 
   const neighborhood = document.createElement('p');
@@ -217,7 +217,7 @@ const registerServiceWorker = () => {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js')
     .catch( err => {
-      console.log("[SW] Registration Failed", err);
+      console.log('[SW] Registration Failed', err);
     });
   }
 }

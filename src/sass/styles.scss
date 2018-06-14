@@ -21,7 +21,7 @@ ul, li {
 }
 
 a {
-	color: orange;
+	color: #f58500;
 	text-decoration: none;
 }
 
@@ -193,7 +193,7 @@ nav h1 a {
 #restaurants-list li h1 {
   color: #f18200;
   font-family: Arial,sans-serif;
-  font-size: 14pt;
+  font-size: 1.2em;
   font-weight: 200;
   letter-spacing: 0;
   line-height: 1.3;
@@ -203,15 +203,15 @@ nav h1 a {
 
 #restaurants-list p {
   margin: 0;
-  font-size: 11pt;
+  font-size: 0.9em;
 }
 
 #restaurants-list li a {
-  background-color: orange;
+  background-color: #f58500;
   border-bottom: 3px solid #eee;
   color: #fff;
   display: inline-block;
-  font-size: 10pt;
+  font-size: 0.8em;
   margin: 15px 0 0;
   padding: 8px 30px 10px;
   text-align: center;
@@ -253,7 +253,7 @@ nav h1 a {
   letter-spacing: 0;
   margin: 15px 0 30px;
   text-transform: uppercase;
-  line-height: 1.1;
+  line-height: 1.2;
 }
 
 #restaurant-img {
@@ -262,8 +262,16 @@ nav h1 a {
 }
 
 #restaurant-address {
-  font-size: 12pt;
+  font-size: 1em;
   margin: 10px 0px;
+}
+
+#restaurant-hours td {
+  color: #666;
+}
+
+#restaurant-hours td:first-child {
+  padding-right: 20px;
 }
 
 #restaurant-cuisine {
@@ -280,17 +288,17 @@ nav h1 a {
   margin-top: -7px;
 }
 
-#restaurant-container, #reviews-container {
+#restaurant-container, #reviews-container, #add-review-container {
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #fff;
   padding: 30px;
 }
 
-#reviews-container {
+#reviews-container, #add-review-container {
   padding: 30px;
 }
 
-#reviews-container h2 {
+#reviews-container h2, #add-review-container h2 {
   color: #f58500;
   font-size: 2em;
   font-weight: 300;
@@ -319,11 +327,74 @@ nav h1 a {
   margin: 10px 0;
 }
 
-#restaurant-hours td {
-  color: #666;
+.add-review__item {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: row;
 }
-#restaurant-hours td:first-child {
-  padding-right: 20px;
+
+.add-review__item-label {
+  min-width: 60px;
+  vertical-align: top;
+}
+
+#add-review-form {
+  width: 80%;
+}
+
+#add-review-form textarea, 
+#add-review-form input[type="text"] {
+  width: 100%;
+  border: #aaa 1px solid;
+}
+
+.add-review__item-rating {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.add-review__item-rating fieldset {
+  border: none;
+  padding: 0;
+}
+
+#add-review-form input[type="radio"]  {
+  display: none;
+}
+
+.rating {
+  font-size: 0;
+  min-height: 32px;
+}
+
+// .rating > label { 
+//   float: right; 
+// }
+
+.rating-star {
+  display: inline-block;
+  height: 32px;
+  width: 28px;
+  font-size: 18pt;
+  color: #444;
+  cursor: pointer;
+  text-align: center;
+}
+
+.rating > input:checked ~ label,
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+  color: #f18200;
+}
+
+.add-review__item-submit {
+  margin-left: 60px;
+  width: 100%;
+  height: 30px;
+  background: #f58500;
+  color: #fff;
+  font-size: 1em;
 }
 
 /* ====================== Tablet Media ====================== */
