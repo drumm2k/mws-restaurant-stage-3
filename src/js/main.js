@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', (e) => {
   fetchNeighborhoods();
   fetchCuisines();
   updateRestaurants();
+  
+  //Listen Map clicks and Selects to init Map
   document.getElementById('map').addEventListener('click', (e) => {
     initMap();
   }, {once: true});
@@ -150,8 +152,8 @@ const fillRestaurantsHTML = (restaurants = self.restaurants) => {
   });
   if (isMapLoaded) addMarkersToMap();
 
-  //Lazyload IMG's
-  let myLazyLoad = new LazyLoad();
+    //Lazyload IMG's
+    let myLazyLoad = new LazyLoad();
 }
 
 /**
