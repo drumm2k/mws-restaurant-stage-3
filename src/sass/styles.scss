@@ -364,20 +364,20 @@ nav h1 a {
 
 .rating {
   font-size: 0;
-  min-height: 32px;
 }
 
-// .rating > label { 
-//   float: right; 
-// }
+.rating > label { 
+  float: right; 
+}
 
-.rating-star {
-  display: inline-block;
-  height: 32px;
-  width: 28px;
-  font-size: 18pt;
-  color: #444;
+.rating label {
   cursor: pointer;
+  display: inline-block;
+  height: 28px;
+  width: 28px;
+  font-size: 20px;
+  line-height: 28px;
+  color: #444;
   text-align: center;
 }
 
