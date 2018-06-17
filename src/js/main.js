@@ -181,6 +181,13 @@ const createRestaurantHTML = (restaurant) => {
   name.tabIndex = '0';
   li.append(name);
 
+  const fav = document.createElement('img');
+  fav.setAttribute('alt', 'Favorite');
+  fav.classList.add('restaurant-fav');
+  fav.setAttribute('src', '/img/icons/favorite.svg');
+  fav.setAttribute('aria-label', `Favorite ${restaurant.name} restaurant.`);
+  li.append(fav);
+
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;
   li.append(neighborhood);
@@ -192,7 +199,7 @@ const createRestaurantHTML = (restaurant) => {
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
-  more.setAttribute('aria-label', `Click for more information about ${restaurant.name}.`);
+  more.setAttribute('aria-label', `Click for more information about ${restaurant.name}. restaurant.`);
   li.append(more);
 
   return li;

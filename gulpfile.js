@@ -77,7 +77,8 @@ gulp.task('utility', function() {
     'src/*.html',
     'src/manifest.json',
     'src/icons/*.png',
-    'src/img/map/*.jpg'
+    'src/img/map/*.jpg',
+    'src/img/icons/*.svg'
   ], {base: 'src'})
     .pipe(gulp.dest('build'))
     .pipe(server.stream());
@@ -107,7 +108,7 @@ gulp.task('copy_html', function() {
 });
 
 gulp.task('imgmin', function() {
-  return gulp.src('src/img/*.jpg')
+  return gulp.src('src/img/restaurants/*.jpg')
     .pipe(responsive({
       '*.jpg': {
         quality: 70

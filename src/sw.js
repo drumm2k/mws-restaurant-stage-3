@@ -35,7 +35,9 @@ let cacheAppFiles = [
   './icons/favicon.png',
   './icons/icon-128.png',
   './icons/icon-196.png',
-  './icons/icon-512.png'
+  './icons/icon-512.png',
+  './img/icons/favorite.svg',
+  './img/icons/favorite_true.svg'
 ];
 
 self.addEventListener('install', e => {
