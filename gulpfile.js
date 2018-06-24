@@ -11,7 +11,7 @@ const rename = require('gulp-rename'); // Rename files easily
 const responsive = require('gulp-responsive'); // Resize and compress IMG's
 const svgmin = require('gulp-svgmin'); // Minify SVG with SVGO
 const server = require('browser-sync').create(); // Live CSS Reload & Browser Syncing
-const run = require('run-sequence'); // Run a series of dependent gulp tasks in order
+//const run = require('run-sequence'); // Run a series of dependent gulp tasks in order
 const compression = require('compression'); // Gzip
 const uglify = require('gulp-uglify'); // Minify JS
 const concat = require('gulp-concat'); // Concat
@@ -22,7 +22,7 @@ const critical = require('critical'); // Generate & Inline Critical-path CSS
 // Cook CSS
 //
 gulp.task('style', function() {
-  gulp.src('src/sass/styles.scss')
+  return gulp.src('src/sass/styles.scss')
     .pipe(plumber())
     .pipe(sass())
     .pipe(postcss([
@@ -109,11 +109,11 @@ gulp.task('serve', function() {
     ui: false
   });
 
-  gulp.watch('src/sw.js', ['sw']);
-  gulp.watch('src/js/*.js', ['js', 'js_rest']);
-  gulp.watch('src/*.html', ['copy_html']);
+  gulp.watch('src/sw.js', gulp.series('sw'));
+  gulp.watch('src/js/*.js', gulp.series(['js', 'js_rest']));
+  gulp.watch('src/*.html', gulp.series('copy_html'));
   gulp.watch('build/*.html').on('change', server.reload);
-  gulp.watch('src/sass/**/*.{scss,sass}', ['style']);
+  gulp.watch('src/sass/**/*.{scss,sass}', gulp.series('style'));
 });
 
 // Copy HTML
@@ -161,7 +161,7 @@ gulp.task('pngmin', function() {
 // Generate & Inline Critical-path CSS
 //
 gulp.task('critical', function (cb) {
-  critical.generate({
+  return critical.generate({
       inline: true,
       base: 'src/',
       src: 'index.html',
@@ -172,6 +172,6 @@ gulp.task('critical', function (cb) {
   });
 });
 
-gulp.task('build', function(fn) {
-  run('imgmin', 'js', 'js_rest', 'sw', 'utility', 'style', 'critical', fn);
-});
+gulp.task('build', gulp.series('imgmin', 'js', 'js_rest', 'sw', 'utility', 'style', 'critical', function(done) {
+  done();
+}));
