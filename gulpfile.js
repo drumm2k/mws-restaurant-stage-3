@@ -17,7 +17,10 @@ const uglify = require('gulp-uglify'); // Minify JS
 const concat = require('gulp-concat'); // Concat
 const sourcemaps = require('gulp-sourcemaps'); // SouceMaps for JS
 const babel = require('gulp-babel'); // BabelJS
+const critical = require('critical'); // Generate & Inline Critical-path CSS
 
+// Cook CSS
+//
 gulp.task('style', function() {
   gulp.src('src/sass/styles.scss')
     .pipe(plumber())
@@ -37,9 +40,12 @@ gulp.task('style', function() {
     .pipe(minify())
     .pipe(rename('styles.min.css'))
     .pipe(gulp.dest('build/css'))
+    .pipe(gulp.dest('src/css'))
     .pipe(server.stream());
 });
 
+// Cook JS
+//
 gulp.task('js', function() {
   return gulp.src(['src/js/*.js', '!src/js/restaurant_info.js'])
     .pipe(sourcemaps.init())
@@ -53,6 +59,8 @@ gulp.task('js', function() {
     .pipe(server.stream());
 });
 
+// Cook JS for restaurant page
+//
 gulp.task('js_rest', function() {
   return gulp.src(['src/js/*.js', '!src/js/main.js'])
     .pipe(sourcemaps.init())
@@ -66,12 +74,16 @@ gulp.task('js_rest', function() {
     .pipe(server.stream());
 });
 
+// Copy Service Worker
+//
 gulp.task('sw', function() {
   return gulp.src(['src/sw.js'])
     .pipe(gulp.dest('build'))
     .pipe(server.stream());
 });
 
+// Copy different Utilities
+//
 gulp.task('utility', function() {
   return gulp.src([
     'src/*.html',
@@ -84,6 +96,8 @@ gulp.task('utility', function() {
     .pipe(server.stream());
 });
 
+// Run web server
+//
 gulp.task('serve', function() {
   server.init({
     server: 'build',
@@ -102,11 +116,15 @@ gulp.task('serve', function() {
   gulp.watch('src/sass/**/*.{scss,sass}', ['style']);
 });
 
+// Copy HTML
+//
 gulp.task('copy_html', function() {
   return gulp.src('src/*.html', {base: 'src'})
     .pipe(gulp.dest('build'));
 });
 
+// Optimize & resize JPG
+//
 gulp.task('imgmin', function() {
   return gulp.src('src/img/restaurants/*.jpg')
     .pipe(responsive({
@@ -128,6 +146,8 @@ gulp.task('imgmin', function() {
     .pipe(gulp.dest('build/img'));
 });
 
+// Optimize PNG
+//
 gulp.task('pngmin', function() {
   return gulp.src('src/img/**/*.png')
     .pipe(responsive({
@@ -138,6 +158,20 @@ gulp.task('pngmin', function() {
     .pipe(gulp.dest('build/img'))
 });
 
+// Generate & Inline Critical-path CSS
+//
+gulp.task('critical', function (cb) {
+  critical.generate({
+      inline: true,
+      base: 'src/',
+      src: 'index.html',
+      dest: '../build/index.html',
+      width: 320,
+      height: 480,
+      minify: true
+  });
+});
+
 gulp.task('build', function(fn) {
-  run('imgmin', 'js', 'js_rest', 'sw', 'utility', 'style', fn);
+  run('imgmin', 'js', 'js_rest', 'sw', 'utility', 'style', 'critical', fn);
 });
