@@ -11,7 +11,6 @@ const rename = require('gulp-rename'); // Rename files easily
 const responsive = require('gulp-responsive'); // Resize and compress IMG's
 const svgmin = require('gulp-svgmin'); // Minify SVG with SVGO
 const server = require('browser-sync').create(); // Live CSS Reload & Browser Syncing
-//const run = require('run-sequence'); // Run a series of dependent gulp tasks in order
 const compression = require('compression'); // Gzip
 const uglify = require('gulp-uglify'); // Minify JS
 const concat = require('gulp-concat'); // Concat
