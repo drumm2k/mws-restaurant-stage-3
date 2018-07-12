@@ -173,7 +173,6 @@ nav h1 a {
 
 #restaurants-list li {
   background-color: #fff;
-  border: 2px solid #ccc;
   font-family: Arial,sans-serif;
   margin: 15px auto;
   min-height: 380px;
@@ -209,7 +208,6 @@ nav h1 a {
 
 #restaurants-list li a {
   background-color: #c93900;
-  border-bottom: 3px solid #eee;
   color: #fff;
   display: inline-block;
   font-size: 1em;
@@ -280,11 +278,11 @@ nav h1 a {
 }
 
 #restaurant-cuisine {
-  background-color: #333;
+  background-color: #444;
   color: #ddd;
   font-size: 1em;
   font-weight: 300;
-  letter-spacing: 10px;
+  letter-spacing: 5px;
   margin: 0 0 20px;
   text-align: center;
   text-transform: uppercase;
@@ -294,13 +292,7 @@ nav h1 a {
 }
 
 #restaurant-container, #reviews-container, #add-review-container {
-  border-bottom: 1px solid #d9d9d9;
-  border-top: 1px solid #fff;
-  padding: 30px;
-}
-
-#reviews-container, #add-review-container {
-  padding: 30px;
+  padding: 20px 30px;
 }
 
 #reviews-container h2, #add-review-container h2 {
@@ -394,14 +386,16 @@ nav h1 a {
 
 .add-review__item-submit {
   border: none;
-  margin: 0;
   padding: 0;
-  width: 140px;
-  height: 35px;
+  margin: 0;
+  margin-top: 10px;
+  width: 170px;
+  height: 42px;
   background: #c93900;
   color: #fff;
   font-size: 1em;
   margin-left: 60px;
+  text-transform: uppercase;
 }
 
 /* ====================== Tablet Media ====================== */
