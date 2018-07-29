@@ -3,10 +3,6 @@
 let restaurant;
 let map;
 
-document.addEventListener('DOMContentLoaded', (e) => {
-  fetchReviewsFromURL();
-});
-
 /**
  * Initialize Google map, called from HTML.
  */
@@ -47,30 +43,7 @@ const fetchRestaurantFromURL = (callback) => {
       }
       fillRestaurantHTML();
       callback(null, restaurant)
-    });
-  }
-}
-
-/**
- * Get reviews
- */
-const fetchReviewsFromURL = (callback) => {
-  if (self.reviews) { // reviews already fetched!
-    callback(null, self.reviews)
-    return;
-  }
-  const id = getParameterByName('id');
-  if (!id) { // no id found in URL
-    error = 'No restaurant id in URL'
-    callback(error, null);
-  } else {
-    DBHelper.fetchReviewsById(id, (error, reviews) => {
-      self.reviews = reviews;
-      if (!reviews) {
-        console.error(error);
-        return;
-      }
-    });
+    })
   }
 }
 
@@ -100,8 +73,9 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
   }
-  // fill reviews
-  fillReviewsHTML();
+
+  // fetch and fill reviews
+  fetchReviews();
 }
 
 /**
@@ -119,6 +93,27 @@ const fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hour
     time.innerHTML = operatingHours[key];
     row.appendChild(time);
     hours.appendChild(row);
+  }
+}
+
+/**
+ * Get reviews
+ */
+const fetchReviews = (callback) => {
+  const id = getParameterByName('id');
+  if (!id) { // no id found in URL
+    error = 'No restaurant id in URL'
+    callback(error, null);
+  } else {
+    DBHelper.fetchReviewsById(id, (error, reviews) => {
+      self.reviews = reviews;
+      if (!reviews) {
+        console.error(error);
+        return;
+      }
+      fillReviewsHTML();
+      console.log(reviews);
+    })
   }
 }
 

@@ -21,16 +21,16 @@ class DBHelper {
           upgradeDB.createObjectStore('restaurants', {keyPath: 'id'});
         case 1:
           const reviewsStore = upgradeDB.createObjectStore('reviews', {keyPath: 'id'});
-          reviewsStore.createIndex('byRestaurantID', 'restaurant_id');
+          reviewsStore.createIndex('byRestaurantId', 'restaurant_id');
       }
     });
   }
 
   static fetchRestaurants(callback) {
     return this.dbPromise()
-      .then (db => {
+      .then(db => {
         let tx = db.transaction('restaurants');
-        let store = tx.objectStore('restaurants');
+        const store = tx.objectStore('restaurants');
         return store.getAll();
       })
       .then(restaurants => {
@@ -44,7 +44,7 @@ class DBHelper {
               .then(db => {
                 if(!db) return db;
 
-                const tx = db.transaction('restaurants', 'readwrite');
+                let tx = db.transaction('restaurants', 'readwrite');
                 const restStore = tx.objectStore('restaurants');
 
                 restaurants.forEach(restaurant => restStore.put(restaurant));
@@ -53,7 +53,7 @@ class DBHelper {
               })
           })
           .catch(error => {
-            console.log('[DB] Restaurants Error ' + error);
+            console.log('[DB] Restaurants Fetch Error ' + error);
           })
       })
   }
@@ -62,27 +62,39 @@ class DBHelper {
    * Fetch a Reviews by Restaurant ID.
    */
   static fetchReviewsById(id, callback) {
-    return fetch(`${DBHelper.DATABASE_URL}reviews/?restaurant_id=${id}`)
-      .then(response => response.json())
+    return this.dbPromise()
+      .then(db => {
+        let tx = db.transaction('reviews');
+        const store = tx.objectStore('reviews');
+        return store.getAll();
+      })
       .then(reviews => {
-        this.dbPromise()
-          .then(db => {
-            if(!db) return db;
+        fetch(`${DBHelper.DATABASE_URL}reviews/?restaurant_id=${id}`)
+          .then(response => response.json())
+          .then(reviews => {
+            this.dbPromise()
+              .then(db => {
+                if(!db) return db;
 
-            let tx = db.transaction('reviews', 'readwrite');
-            const revStore = tx.objectStore('reviews');
-            
-            if (Array.isArray(reviews)) {
-              reviews.forEach(review => revStore.put(review));
-            } else {
-              revStore.put(reviews);
+                let tx = db.transaction('reviews', 'readwrite');
+                const revStore = tx.objectStore('reviews');
+                
+                if (Array.isArray(reviews)) {
+                  reviews.forEach(review => revStore.put(review));
+                } else {
+                  revStore.put(reviews);
+                }
+              })
+                
+              return callback(null, reviews);
+          })
+          .catch(error => {
+            console.log('[DB] Fetch Error, Loading Offlie Reviews ' + error);
+            if (reviews.length !== 0) {
+              reviews = reviews.filter(r => r.restaurant_id == id);
+              return callback(null, reviews);
             }
           })
-          
-          return callback(null, reviews);
-      })
-      .catch(error => {
-        console.log('[DB] Reviews Error ' + error);
       })
   }
 
