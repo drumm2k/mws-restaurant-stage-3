@@ -184,30 +184,38 @@ const createRestaurantHTML = (restaurant) => {
   image.alt = restaurant.name + ' Restaurant';
   picture.append(image);
 
+  const div = document.createElement('div');
+  div.className = 'restaurant-list__separator';
+  li.append(div);
+
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;
   name.tabIndex = '0';
-  li.append(name);
+  div.append(name);
 
   const fav = document.createElement('img');
-  fav.setAttribute('alt', 'Favorite');
+  fav.setAttribute('alt', `Favorite`);
+  //fav.className = 'restaurant-fav';
   fav.classList.add('restaurant-fav');
   fav.setAttribute('src', '/img/icons/favorite.svg');
   fav.setAttribute('aria-label', `Favorite ${restaurant.name} restaurant.`);
-  li.append(fav);
+  fav.tabIndex = '0';
+  div.append(fav);
 
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;
+  neighborhood.tabIndex = '0';
   li.append(neighborhood);
 
   const address = document.createElement('p');
   address.innerHTML = restaurant.address;
+  address.tabIndex = '0';
   li.append(address);
 
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
-  more.setAttribute('aria-label', `Click for more information about ${restaurant.name}. restaurant.`);
+  more.setAttribute('aria-label', `Click for more information about ${restaurant.name} restaurant.`);
   li.append(more);
 
   return li;
