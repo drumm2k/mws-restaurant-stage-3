@@ -151,7 +151,6 @@ nav h1 a {
 
 .filter-options select {
   background-color: white;
-  border: 1px solid #fff;
   font-family: Arial,sans-serif;
   font-size: 0.8rem;
   height: 35px;
@@ -180,6 +179,8 @@ nav h1 a {
   text-align: left;
   min-width: 220px;
   max-width: 350px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 #restaurants-list .restaurant-img {
@@ -194,11 +195,10 @@ nav h1 a {
   color: #263238;
   font-family: Arial,sans-serif;
   font-size: 1.2em;
-  font-weight: 200;
+  font-weight: 700;
   letter-spacing: 0;
   line-height: 1.5;
   margin: 15px 0;
-  text-transform: uppercase;
 }
 
 #restaurants-list p {
@@ -215,7 +215,8 @@ nav h1 a {
   padding: 8px 30px 10px;
   text-align: center;
   text-decoration: none;
-  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 5px;
 }
 
 .restaurant-fav {
@@ -262,10 +263,10 @@ nav h1 a {
   color: #263238;
   font-family: Arial,sans-serif;
   font-size: 1.7em;
-  font-weight: 200;
+  font-weight: 700;
   letter-spacing: 0;
-  margin: 15px 0;
-  text-transform: uppercase;
+  margin: 0;
+  margin-top: 15px;
   line-height: 1.2;
 }
 
@@ -288,17 +289,11 @@ nav h1 a {
 }
 
 #restaurant-cuisine {
-  background-color: #515b60;
-  color: #ddd;
-  font-size: 1em;
+  color: #515b60;
+  font-size: 1.2em;
   font-weight: 300;
-  letter-spacing: 3px;
-  margin: 0 0 20px;
-  text-align: center;
-  text-transform: uppercase;
-  width: 100%;
-  max-width: 800px;
-  margin-top: -7px;
+  margin: 0;
+  margin-bottom: 10px;
 }
 
 #restaurant-container, #reviews-container, #add-review-container {
@@ -322,10 +317,11 @@ nav h1 a {
 
 #reviews-list li {
   background-color: #fff;
-  border: 2px solid #f3f3f3;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   display: block;
   list-style-type: none;
-  margin: 0 0 30px;
+  margin: 0 0 20px;
   overflow: hidden;
   padding: 20px;
 }
@@ -336,6 +332,15 @@ nav h1 a {
 
 #reviews-list li p {
   margin: 10px 0;
+}
+
+#reviews-list li p:first-child {
+  font-weight: bold;
+}
+
+.reviews-list__stars {
+  color: #ff9d00;
+  letter-spacing: 3px;
 }
 
 .add-review__item {
@@ -399,17 +404,18 @@ nav h1 a {
 }
 
 .add-review__item-submit {
+  font-size: 1em;
+  font-weight: 500;
   border: none;
   padding: 0;
   margin: 0;
   margin-top: 10px;
-  width: 170px;
+  width: 150px;
   height: 42px;
   background: #515b60;
   color: #fff;
-  font-size: 1em;
   margin-left: 60px;
-  text-transform: uppercase;
+  border-radius: 5px;
 }
 
 /* ====================== Tablet Media ====================== */

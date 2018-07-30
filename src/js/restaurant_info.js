@@ -54,6 +54,9 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
 
+  const cuisine = document.getElementById('restaurant-cuisine');
+  cuisine.innerHTML = restaurant.cuisine_type;
+
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
@@ -73,9 +76,6 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
   } else {
     picture.srcset = '/img/' + restaurant.photograph + '.jpg';
   }
-
-  const cuisine = document.getElementById('restaurant-cuisine');
-  cuisine.innerHTML = restaurant.cuisine_type;
 
   // fill operating hours
   if (restaurant.operating_hours) {
@@ -161,7 +161,9 @@ const createReviewHTML = (review) => {
   li.appendChild(date);
 
   const rating = document.createElement('p');
-  rating.innerHTML = `Rating: ${review.rating}`;
+  let stars = '★'.repeat(review.rating);
+  rating.className = 'reviews-list__stars';
+  rating.innerHTML = stars;
   li.appendChild(rating);
 
   const comments = document.createElement('p');
