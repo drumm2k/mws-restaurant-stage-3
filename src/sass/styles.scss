@@ -120,7 +120,7 @@ nav h1 a {
 #map {
   height: 400px;
   width: 100%;
-  background-color: #ccc;
+  background-color: #e8e8e8;
   overflow: hidden;
 }
 
@@ -249,7 +249,7 @@ nav h1 a {
 }
 
 .inside #map {
-  background-color: #ccc;
+  background-color: #e8e8e8;
   height: 100%;
   width: 100%;
 }
@@ -491,6 +491,13 @@ nav h1 a {
 
   #breadcrumb {
     width: calc(50% - 88px);
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  #restaurants-list li {
+    width: calc((100% - 296px)/4);
+    max-width: 550px;
   }
 }
 
