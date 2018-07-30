@@ -167,12 +167,20 @@ const createRestaurantHTML = (restaurant) => {
 
   const source = document.createElement('source');
   source.media = '(min-width: 768px)';
-  source.setAttribute('data-srcset', '/img/' + restaurant.id + '.jpg');
+  if (restaurant.photograph == undefined) {
+    source.setAttribute('data-src', '/img/nophoto.jpg');
+  } else {
+    source.setAttribute('data-srcset', '/img/' + restaurant.photograph + '.jpg');
+  }
   picture.append(source);
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.setAttribute('data-src', '/img/' + restaurant.id + '-400.jpg');
+  if (restaurant.photograph == undefined) {
+    image.setAttribute('data-src', '/img/nophoto.jpg');
+  } else {
+    image.setAttribute('data-src', '/img/' + restaurant.photograph + '-400.jpg');
+  }
   image.alt = restaurant.name + ' Restaurant';
   picture.append(image);
 

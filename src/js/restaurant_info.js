@@ -59,12 +59,20 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
 
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
-  image.src = '/img/' + restaurant.id + '-400.jpg';
+  if (restaurant.photograph == undefined) {
+    image.src = '/img/nophoto.jpg';
+  } else {
+    image.src = '/img/' + restaurant.photograph + '-400.jpg';
+  }
   image.alt = 'Image of the ' + restaurant.name + ' Restaurant';
 
   const picture = document.getElementById('restaurant-img-media');
   picture.media = '(min-width: 450px)';
-  picture.srcset = '/img/' + restaurant.id + '.jpg';
+  if (restaurant.photograph == undefined) {
+    picture.srcset = '/img/nophoto.jpg';
+  } else {
+    picture.srcset = '/img/' + restaurant.photograph + '.jpg';
+  }
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
@@ -112,7 +120,6 @@ const fetchReviews = (callback) => {
         return;
       }
       fillReviewsHTML();
-      console.log(reviews);
     })
   }
 }

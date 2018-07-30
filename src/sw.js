@@ -29,6 +29,7 @@ let cacheAppFiles = [
   './img/8-400.jpg',
   './img/9-400.jpg',
   './img/10-400.jpg',
+  './img/nophoto.jpg',
   './img/map/map-placeholder-sm.jpg',
   './img/map/map-placeholder-mid.jpg',
   './img/map/map-placeholder-big.jpg',
