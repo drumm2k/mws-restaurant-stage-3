@@ -40,7 +40,7 @@ class DBHelper {
         fetch(`${DBHelper.DATABASE_URL}restaurants`)
           .then(response => response.json())
           .then(restaurants => {
-            return this.dbPromise()
+            this.dbPromise()
               .then(db => {
                 if(!db) return db;
 
@@ -96,6 +96,27 @@ class DBHelper {
             }
           })
       })
+  }
+
+  /**
+   * Update Favorite by ID
+   */
+  static updateFav(id, fav) {
+    fetch(`${DBHelper.DATABASE_URL}restaurants/${id}/?is_favorite=${fav}`, {
+      method: 'PUT'
+    }).then(() => {
+      this.dbPromise()
+        .then(db => {
+          let tx = db.transaction('restaurants', 'readwrite');
+          const restStore = tx.objectStore('restaurants');
+
+          restStore.get(id)
+            .then(restaurant => {
+              restaurant.is_favorite = fav;
+              restStore.put(restaurant);
+            })
+        })
+    })
   }
 
   /**

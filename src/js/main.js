@@ -195,11 +195,14 @@ const createRestaurantHTML = (restaurant) => {
 
   const fav = document.createElement('img');
   fav.setAttribute('alt', `Favorite`);
-  //fav.className = 'restaurant-fav';
-  fav.classList.add('restaurant-fav');
-  fav.setAttribute('src', '/img/icons/favorite.svg');
-  fav.setAttribute('aria-label', `Favorite ${restaurant.name} restaurant.`);
+  fav.className = 'restaurant-fav';
   fav.tabIndex = '0';
+  fav.onclick = function () {
+    DBHelper.updateFav(restaurant.id, !restaurant.is_favorite);
+    restaurant.is_favorite = !restaurant.is_favorite; // need to FIX when DB is_favorite is STRING (first click do nothing)
+    changeFav(fav, restaurant.is_favorite, restaurant.name);
+  }
+  changeFav(fav, restaurant.is_favorite, restaurant.name);
   div.append(fav);
 
   const neighborhood = document.createElement('p');
@@ -219,6 +222,19 @@ const createRestaurantHTML = (restaurant) => {
   li.append(more);
 
   return li;
+}
+
+/**
+ * Switch Favourite
+ */
+const changeFav = (hrt, fav, name) => {
+  if (!fav || fav == 'false') {
+    hrt.setAttribute('src', '/img/icons/favorite.svg');
+    hrt.setAttribute('aria-label', 'Favorite ' + name + ' restaurant.')
+  } else {
+    hrt.setAttribute('src', '/img/icons/favorite_true.svg');
+    hrt.setAttribute('aria-label', 'Unfavorite ' + name + ' restaurant.')
+  }
 }
 
 /**
