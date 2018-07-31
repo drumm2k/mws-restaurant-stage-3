@@ -113,7 +113,7 @@ const fetchReviews = (callback) => {
     error = 'No restaurant id in URL'
     callback(error, null);
   } else {
-    DBHelper.fetchReviewsById(id, (error, reviews) => {
+    DBHelper.fetchReviewsById(restaurant.id, (error, reviews) => {
       self.reviews = reviews;
       if (!reviews) {
         console.error(error);
@@ -140,6 +140,14 @@ const fillReviewsHTML = (reviews = self.reviews) => {
     container.appendChild(noReviews);
     return;
   }
+
+  if (Object.keys(reviews).length === 0) {
+    const noReviews = document.createElement('p');
+    noReviews.innerHTML = 'Offline mode! No cached reviews for this restaurant.';
+    container.appendChild(noReviews);
+    return;
+  }
+
   const ul = document.getElementById('reviews-list');
   reviews.forEach(review => {
     ul.appendChild(createReviewHTML(review));

@@ -62,39 +62,46 @@ class DBHelper {
    * Fetch a Reviews by Restaurant ID.
    */
   static fetchReviewsById(id, callback) {
-    return this.dbPromise()
-      .then(db => {
-        let tx = db.transaction('reviews');
-        const store = tx.objectStore('reviews');
-        return store.getAll();
-      })
+    fetch(`${DBHelper.DATABASE_URL}reviews/?restaurant_id=${id}`)
+      .then(response => response.json())
       .then(reviews => {
-        fetch(`${DBHelper.DATABASE_URL}reviews/?restaurant_id=${id}`)
-          .then(response => response.json())
-          .then(reviews => {
-            this.dbPromise()
-              .then(db => {
-                if(!db) return db;
+        this.dbPromise()
+          .then(db => {
+            if(!db) return;
 
-                let tx = db.transaction('reviews', 'readwrite');
-                const revStore = tx.objectStore('reviews');
+            let tx = db.transaction('reviews', 'readwrite');
+            const revStore = tx.objectStore('reviews');
                 
-                if (Array.isArray(reviews)) {
-                  reviews.forEach(review => revStore.put(review));
-                } else {
-                  revStore.put(reviews);
-                }
-              })
-                
-              return callback(null, reviews);
-          })
-          .catch(error => {
-            console.log('[DB] Fetch Error, Loading Offlie Reviews ' + error);
-            if (reviews.length !== 0) {
-              reviews = reviews.filter(r => r.restaurant_id == id);
-              return callback(null, reviews);
+            if (Array.isArray(reviews)) {
+              reviews.forEach(review => revStore.put(review));
+            } else {
+              revStore.put(reviews);
             }
           })
+                
+          return callback(null, reviews);
+      })
+      .catch(error => {
+        console.log('[DB] Fetch Error, Loading Offlie Reviews ' + error);
+        return DBHelper.getDbObjectByID('reviews', 'byRestaurantId', id)
+          .then(reviews => {
+            console.log(reviews);
+            return callback(null, reviews);
+          })
+      })
+    }
+
+  /**
+   * Get object from DB by ID
+   */
+  static getDbObjectByID(table, index, id) {
+    return this.dbPromise().then(db => {
+      if (!db) return;
+
+      const store = db.transaction(table).objectStore(table);
+      const indexId = store.index(index);
+      
+      return indexId.getAll(id);
       })
   }
 
@@ -107,6 +114,8 @@ class DBHelper {
     }).then(() => {
       this.dbPromise()
         .then(db => {
+          if(!db) return;
+
           let tx = db.transaction('restaurants', 'readwrite');
           const restStore = tx.objectStore('restaurants');
 
