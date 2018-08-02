@@ -174,7 +174,7 @@ const addReview = () => {
     
     const container = document.getElementById('reviews-container');
     const ul = document.getElementById('reviews-list');
-    ul.appendChild(createReviewHTML(reviewData));
+    ul.appendChild(createReviewHTML(reviewData, true));
     container.appendChild(ul);
   }
   console.log(reviewData);
@@ -218,7 +218,8 @@ const fillReviewsHTML = (reviews = self.reviews) => {
   }
 
   if (reviewLocal !== null) {
-    ul.appendChild(createReviewHTML(reviewLocal));
+    ul.appendChild(createReviewHTML(reviewLocal, true));
+    DBHelper.sendReviewOnline();
   }
 
   container.appendChild(ul);
@@ -227,10 +228,10 @@ const fillReviewsHTML = (reviews = self.reviews) => {
 /**
  * Create review HTML and add it to the webpage.
  */
-const createReviewHTML = (review) => {
+const createReviewHTML = (review, offline) => {
   const li = document.createElement('li');
 
-  if(!navigator.onLine) {
+  if(!navigator.onLine && offline) {
     const offline = document.createElement('div');
     offline.className = 'reviews-offline';
     offline.innerHTML = 'OFFLINE';

@@ -95,7 +95,9 @@ class DBHelper {
    */
   static sendReview(review) {
     if (!navigator.onLine) {
-      DBHelper.sendReviewOnline(review);
+      localStorage.setItem('reviewOffline', JSON.stringify(review));
+      console.log('Offline review added to Local Storage');
+      DBHelper.sendReviewOnline();
       return;
     }
 
@@ -116,10 +118,7 @@ class DBHelper {
   /**
    * Send review when online
    */
-  static sendReviewOnline(review) {
-    localStorage.setItem('reviewOffline', JSON.stringify(review));
-    console.log('Offline review added to Local Storage')
-
+  static sendReviewOnline() {
     window.addEventListener('online', () => {
       let reviewOffline = JSON.parse(localStorage.getItem('reviewOffline'));
       [...document.querySelectorAll('.reviews-offline')].forEach(element => {
