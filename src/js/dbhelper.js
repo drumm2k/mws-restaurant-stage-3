@@ -94,6 +94,11 @@ class DBHelper {
    * Send Review
    */
   static sendReview(review) {
+    if (!navigator.onLine) {
+      DBHelper.sendReviewOnline(review);
+      return;
+    }
+
     fetch(`${DBHelper.DATABASE_URL}reviews`, {
       method: 'POST',
       body: JSON.stringify(review),
@@ -106,6 +111,24 @@ class DBHelper {
         return 'Success'
       }
     }).catch(error => console.log('Review Send error: ' + error));
+  }
+
+  /**
+   * Send review when online
+   */
+  static sendReviewOnline(review) {
+    localStorage.setItem('reviewOffline', JSON.stringify(review));
+    console.log('Offline review added to Local Storage')
+
+    window.addEventListener('online', () => {
+      let reviewOffline = JSON.parse(localStorage.getItem('reviewOffline'));
+
+      if (reviewOffline !== null) {
+        DBHelper.sendReview(reviewOffline);
+        localStorage.removeItem('reviewOffline');
+        console.log('Offline review sent')
+      }
+    });
   }
 
   /**

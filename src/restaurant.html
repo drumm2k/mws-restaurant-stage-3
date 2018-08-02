@@ -37,7 +37,7 @@
     </section>
     <!-- End map -->
     <!-- Beginning restaurant -->
-    <section id="restaurant-container" tabindex="-1">
+    <section id="restaurant-container">
       <h1 id="restaurant-name" tabindex="0"></h1>
       <p id="restaurant-cuisine" tabindex="0"></p>
       <picture>
@@ -52,34 +52,31 @@
     <section id="review-container">
       <h2 tabindex="0">Add Review</h2>
       <form id="review-form" action="">
-        <div class="review__item">
-          <label for="review-name" class="review__item-label">Name</label>
+        <div class="review-item">
+          <label for="review-name" class="review-item__label">Name</label>
           <input id="review-name" type="text" aria-label="Reviewers Name" name="name" required>
         </div>
 
-        <div class="review__item">
-          <span class="review__item-label">Rating</span>
-          <fieldset class="rating">
-            <input id="review-rating5" name="rating" type="radio" value="5">
-            <label for="review-rating5" title="5 stars" aria-label="Rate 5 stars" tabindex="0">★</label>
-            <input id="review-rating4" name="rating" type="radio" value="4">
-            <label for="review-rating4" title="4 stars" aria-label="Rate 4 stars" tabindex="0">★</label>
-            <input id="review-rating3" name="rating" type="radio" value="3">
-            <label for="review-rating3" title="3 stars" aria-label="Rate 3 stars" tabindex="0">★</label>
-            <input id="review-rating2" name="rating" type="radio" value="2">
-            <label for="review-rating2" title="2 stars" aria-label="Rate 2 stars" tabindex="0">★</label>
-            <input id="review-rating1" name="rating" type="radio" value="1" required>
-            <label for="review-rating1" title="1 star" aria-label="Rate 1 star" tabindex="0">★</label>
-          </fieldset>
+        <div class="review-item">
+          <span class="review-item__label">Rating</span>
+          <select id= "rating" name="rating" aria-label="Rating select">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
         </div>
 
-        <div class="review__item">
-          <label for="review-comments" class="review__item-label">Review</label>
+        <div class="review-item">
+          <label for="review-comments" class="review-item__label">Review</label>
           <textarea id="review-comments" name="comments" rows="8" cols="20" aria-label="Comments" required></textarea>
         </div>
 
-        <div class="review__item">
-          <button class="review__item-submit" aria-label="Submit Review" id="review-submit" onclick="addReview()">Submit</button>
+        
+
+        <div class="review-item">
+          <button class="review-item__submit" aria-label="Submit Review" id="review-submit" onclick="addReview()">Submit</button>
         </div>
       </form>
     </section>

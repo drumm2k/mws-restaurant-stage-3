@@ -345,17 +345,17 @@ nav h1 a {
 
 /* ====================== Restaurant Review Form ====================== */
 
-.review__item {
+.review-item {
   padding: 5px 0;
   display: flex;
   flex-direction: row;
 }
 
-.review__item:nth-child(2) {
+.review-item:nth-child(2) {
   align-items: center;
 }
 
-.review__item-label {
+.review-item__label {
   min-width: 60px;
   vertical-align: top;
 }
@@ -380,12 +380,9 @@ nav h1 a {
   display: none;
 }
 
-.rating {
-  font-size: 0;
-}
-
-.rating > label { 
-  float: right; 
+#rating {
+  width: 140px;
+  box-sizing: content-box;
 }
 
 .rating label {
@@ -399,13 +396,7 @@ nav h1 a {
   text-align: center;
 }
 
-.rating > input:checked ~ label,
-.rating:not(:checked) > label:hover,
-.rating:not(:checked) > label:hover ~ label {
-  color: #ff9d00;
-}
-
-.review__item-submit {
+.review-item__submit {
   font-size: 1em;
   font-weight: 500;
   border: none;

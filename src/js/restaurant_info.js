@@ -132,19 +132,44 @@ const addReview = () => {
   event.preventDefault();
 
   let id = getParameterByName('id');
-  let name = document.getElementById('review-name').value;
-  let rating = document.querySelector('input[name="rating"]:checked').value;
-  let comments = document.getElementById('review-comments').value;
+  let name = document.getElementById('review-name');
+  let rating = document.querySelector('#rating option:checked');
+  let comments = document.getElementById('review-comments');
+  let reviewData = {};
 
-  const reviewData = {
-    restaurant_id: parseInt(id),
-    name: name,
-    rating: parseInt(rating),
-    comments: comments
-    //createdAt: new Date()
+  //reset errors
+  name.style.borderColor = '';
+  comments.style.borderColor = '';
+
+  //restaurant id
+  reviewData.restaurant_id = parseInt(id);
+
+  //name
+  var namePattern = /^[A-Za-z0-9'`-\s]+$/i;
+  if (!namePattern.test(name.value)) {
+    name.style.borderColor = 'red';
   }
+  else {
+    reviewData.name = name.value;
+  }
+
+  //rating
+  reviewData.rating = parseInt(rating.value);
   
-  DBHelper.sendReview(reviewData);
+  //comments
+  var commentsPattern = /^[^\>]+$/i;
+  if (!commentsPattern.test(comments.value)) {
+    comments.style.borderColor = 'red';
+  }
+  else {
+    reviewData.comments = comments.value;
+  }
+
+  //check if all inputs added
+  if (Object.keys(reviewData).length == 4) {
+    document.getElementById('review-form').reset();
+    DBHelper.sendReview(reviewData);
+  }
 }
 
 /**
