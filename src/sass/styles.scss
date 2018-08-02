@@ -309,7 +309,7 @@ nav h1 a {
 
 #reviews-list {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   flex-wrap: wrap;
   margin: 0;
   padding: 0;
@@ -324,10 +324,6 @@ nav h1 a {
   margin: 0 0 20px;
   overflow: hidden;
   padding: 20px;
-}
-
-#reviews-list li:last-child {
-  margin: 0 0;
 }
 
 #reviews-list li p {
@@ -409,6 +405,13 @@ nav h1 a {
   color: #fff;
   margin-left: 60px;
   border-radius: 5px;
+}
+
+.reviews-offline {
+  background: #515b60;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
 }
 
 /* ====================== Tablet Media ====================== */

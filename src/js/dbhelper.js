@@ -122,6 +122,9 @@ class DBHelper {
 
     window.addEventListener('online', () => {
       let reviewOffline = JSON.parse(localStorage.getItem('reviewOffline'));
+      [...document.querySelectorAll('.reviews-offline')].forEach(element => {
+        element.remove();
+      })
 
       if (reviewOffline !== null) {
         DBHelper.sendReview(reviewOffline);

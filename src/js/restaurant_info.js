@@ -127,14 +127,13 @@ const fetchReviews = (callback) => {
 /**
  * Add Review form submission
  */
-
 const addReview = () => {
   event.preventDefault();
 
-  let id = getParameterByName('id');
-  let name = document.getElementById('review-name');
-  let rating = document.querySelector('#rating option:checked');
-  let comments = document.getElementById('review-comments');
+  const id = getParameterByName('id');
+  const name = document.getElementById('review-name');
+  const rating = document.querySelector('#rating option:checked');
+  const comments = document.getElementById('review-comments');
   let reviewData = {};
 
   //reset errors
@@ -145,7 +144,7 @@ const addReview = () => {
   reviewData.restaurant_id = parseInt(id);
 
   //name
-  var namePattern = /^[A-Za-z0-9'`-\s]+$/i;
+  const namePattern = /^[A-Za-z0-9'`-\s]+$/i;
   if (!namePattern.test(name.value)) {
     name.style.borderColor = 'red';
   }
@@ -153,11 +152,14 @@ const addReview = () => {
     reviewData.name = name.value;
   }
 
+  //date
+  reviewData.createdAt = new Date().toLocaleString();
+  
   //rating
   reviewData.rating = parseInt(rating.value);
   
   //comments
-  var commentsPattern = /^[^\>]+$/i;
+  const commentsPattern = /^[^\>]+$/i;
   if (!commentsPattern.test(comments.value)) {
     comments.style.borderColor = 'red';
   }
@@ -166,10 +168,16 @@ const addReview = () => {
   }
 
   //check if all inputs added
-  if (Object.keys(reviewData).length == 4) {
+  if (Object.keys(reviewData).length == 5) {
     document.getElementById('review-form').reset();
     DBHelper.sendReview(reviewData);
+    
+    const container = document.getElementById('reviews-container');
+    const ul = document.getElementById('reviews-list');
+    ul.appendChild(createReviewHTML(reviewData));
+    container.appendChild(ul);
   }
+  console.log(reviewData);
 }
 
 /**
@@ -200,6 +208,19 @@ const fillReviewsHTML = (reviews = self.reviews) => {
   reviews.forEach(review => {
     ul.appendChild(createReviewHTML(review));
   });
+
+  //check localstorage for offline review
+  let reviewLocal = JSON.parse(localStorage.getItem('reviewOffline'));
+  if (reviewLocal !== null && navigator.onLine) {
+    DBHelper.sendReview(reviewLocal);
+    localStorage.removeItem('reviewOffline');
+    console.log('Offline review sent');
+  }
+
+  if (reviewLocal !== null) {
+    ul.appendChild(createReviewHTML(reviewLocal));
+  }
+
   container.appendChild(ul);
 }
 
@@ -208,15 +229,20 @@ const fillReviewsHTML = (reviews = self.reviews) => {
  */
 const createReviewHTML = (review) => {
   const li = document.createElement('li');
+
+  if(!navigator.onLine) {
+    const offline = document.createElement('div');
+    offline.className = 'reviews-offline';
+    offline.innerHTML = 'OFFLINE';
+    li.appendChild(offline);
+  }
+
   const name = document.createElement('p');
   name.innerHTML = review.name;
   li.appendChild(name);
 
   const date = document.createElement('p');
-  if (typeof review.createdAt === 'string' || review.createdAt instanceof String) {
-    review.createdAt = review.createdAt.slice(0, -8).replace('T', ' ');
-  }
-  date.innerHTML = review.createdAt;
+  date.innerHTML = new Date(review.createdAt).toLocaleString();
   li.appendChild(date);
 
   const rating = document.createElement('p');
