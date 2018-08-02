@@ -49,41 +49,41 @@
     </section>
     <!-- End restaurant -->
     <!-- Add review form -->
-    <section id="add-review-container">
+    <section id="review-container">
       <h2 tabindex="0">Add Review</h2>
-      <form id="add-review-form" action="">
-        <div class="add-review__item">
-          <label class="add-review__item-label" for="reviewer">Name</label>
-          <input type="text" aria-label="Reviewers Name" name="reviewer" id="reviewer" required>
+      <form id="review-form" action="">
+        <div class="review__item">
+          <label for="review-name" class="review__item-label">Name</label>
+          <input id="review-name" type="text" aria-label="Reviewers Name" name="name" required>
         </div>
 
-        <div class="add-review__item">
-          <span class="add-review__item-label">Rating</span>
+        <div class="review__item">
+          <span class="review__item-label">Rating</span>
           <fieldset class="rating">
-            <input name="rating" id="rating5" type="radio" value="5">
-            <label for="rating5" title="5 stars" aria-label="Rate 5 stars" tabindex="0">★</label>
-            <input name="rating" id="rating4" type="radio" value="4">
-            <label for="rating4" title="4 stars" aria-label="Rate 4 stars" tabindex="0">★</label>
-            <input name="rating" id="rating3" type="radio" value="3">
-            <label for="rating3" title="3 stars" aria-label="Rate 3 stars" tabindex="0">★</label>
-            <input name="rating" id="rating2" type="radio" value="2">
-            <label for="rating2" title="2 stars" aria-label="Rate 2 stars" tabindex="0">★</label>
-            <input name="rating" id="rating1" type="radio" value="1" required>
-            <label for="rating1" title="1 star" aria-label="Rate 1 star" tabindex="0">★</label>
+            <input id="review-rating5" name="rating" type="radio" value="5">
+            <label for="review-rating5" title="5 stars" aria-label="Rate 5 stars" tabindex="0">★</label>
+            <input id="review-rating4" name="rating" type="radio" value="4">
+            <label for="review-rating4" title="4 stars" aria-label="Rate 4 stars" tabindex="0">★</label>
+            <input id="review-rating3" name="rating" type="radio" value="3">
+            <label for="review-rating3" title="3 stars" aria-label="Rate 3 stars" tabindex="0">★</label>
+            <input id="review-rating2" name="rating" type="radio" value="2">
+            <label for="review-rating2" title="2 stars" aria-label="Rate 2 stars" tabindex="0">★</label>
+            <input id="review-rating1" name="rating" type="radio" value="1" required>
+            <label for="review-rating1" title="1 star" aria-label="Rate 1 star" tabindex="0">★</label>
           </fieldset>
         </div>
 
-        <div class="add-review__item">
-          <label class="add-review__item-label" for="review">Review</label>
-          <textarea rows="8" cols="20" aria-label="Review Text" name="review" id="review" required></textarea>
+        <div class="review__item">
+          <label for="review-comments" class="review__item-label">Review</label>
+          <textarea id="review-comments" name="comments" rows="8" cols="20" aria-label="Comments" required></textarea>
         </div>
 
-        <div class="add-review__item">
-          <button class="add-review__item-submit" aria-label="Submit Review" id="submitButton" type="submit">Submit</button>
+        <div class="review__item">
+          <button class="review__item-submit" aria-label="Submit Review" id="review-submit" onclick="addReview()">Submit</button>
         </div>
       </form>
     </section>
-    <!-- End add review form -->
+    <!-- End review form -->
     <!-- Beginning reviews -->
     <section id="reviews-container">
       <ul id="reviews-list"></ul>
@@ -102,7 +102,5 @@
   <!-- Google Maps -->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initMap"></script>
   <!-- End scripts -->
-
 </body>
-
 </html>

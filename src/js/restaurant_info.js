@@ -125,6 +125,29 @@ const fetchReviews = (callback) => {
 }
 
 /**
+ * Add Review form submission
+ */
+
+const addReview = () => {
+  event.preventDefault();
+
+  let id = getParameterByName('id');
+  let name = document.getElementById('review-name').value;
+  let rating = document.querySelector('input[name="rating"]:checked').value;
+  let comments = document.getElementById('review-comments').value;
+
+  const reviewData = {
+    restaurant_id: parseInt(id),
+    name: name,
+    rating: parseInt(rating),
+    comments: comments
+    //createdAt: new Date()
+  }
+  
+  DBHelper.sendReview(reviewData);
+}
+
+/**
  * Create all reviews HTML and add them to the webpage.
  */
 const fillReviewsHTML = (reviews = self.reviews) => {
@@ -165,6 +188,9 @@ const createReviewHTML = (review) => {
   li.appendChild(name);
 
   const date = document.createElement('p');
+  if (typeof review.createdAt === 'string' || review.createdAt instanceof String) {
+    review.createdAt = review.createdAt.slice(0, -8).replace('T', ' ');
+  }
   date.innerHTML = review.createdAt;
   li.appendChild(date);
 

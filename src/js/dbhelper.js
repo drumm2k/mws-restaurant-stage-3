@@ -85,11 +85,28 @@ class DBHelper {
         console.log('[DB] Fetch Error, Loading Offlie Reviews ' + error);
         return DBHelper.getDbObjectByID('reviews', 'byRestaurantId', id)
           .then(reviews => {
-            console.log(reviews);
             return callback(null, reviews);
           })
       })
     }
+  
+  /**
+   * Send Review
+   */
+  static sendReview(review) {
+    fetch(`${DBHelper.DATABASE_URL}reviews`, {
+      method: 'POST',
+      body: JSON.stringify(review),
+      headers: new Headers({'Content-Type': 'application/json'})
+    }).then((response) => {
+      const contentType = response.headers.get('content-type'); 
+      if (contentType && contentType.indexOf('application/json') !== -1) {
+        return response.json();
+      } else {
+        return 'Success'
+      }
+    }).catch(error => console.log('Review Send error: ' + error));
+  }
 
   /**
    * Get object from DB by ID
