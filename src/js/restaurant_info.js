@@ -211,11 +211,6 @@ const fillReviewsHTML = (reviews = self.reviews) => {
 
   //check localstorage for offline review
   let reviewLocal = JSON.parse(localStorage.getItem('reviewOffline'));
-  if (reviewLocal !== null && navigator.onLine) {
-    DBHelper.sendReview(reviewLocal);
-    localStorage.removeItem('reviewOffline');
-    console.log('Offline review sent');
-  }
 
   if (reviewLocal !== null) {
     ul.appendChild(createReviewHTML(reviewLocal, true));
