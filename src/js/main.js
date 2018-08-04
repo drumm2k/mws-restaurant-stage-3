@@ -201,8 +201,15 @@ const createRestaurantHTML = (restaurant) => {
   fav.className = 'restaurant-fav';
   fav.tabIndex = '0';
   fav.onclick = function () {
+    if (typeof restaurant.is_favorite === 'string' && restaurant.is_favorite === 'true') {
+      restaurant.is_favorite = true;
+    }
+    if (typeof restaurant.is_favorite === 'string' && restaurant.is_favorite === 'false') {
+      restaurant.is_favorite = false;
+    }
+    //update in DB and backend
     DBHelper.updateFav(restaurant.id, !restaurant.is_favorite);
-    restaurant.is_favorite = !restaurant.is_favorite; // need to FIX when DB is_favorite is STRING (first click do nothing)
+    restaurant.is_favorite = !restaurant.is_favorite;
     changeFav(fav, restaurant.is_favorite, restaurant.name);
   }
   changeFav(fav, restaurant.is_favorite, restaurant.name);
