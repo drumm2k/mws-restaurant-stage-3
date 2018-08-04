@@ -204,7 +204,6 @@ const fillReviewsHTML = (reviews = self.reviews) => {
     const noReviews = document.createElement('p');
     noReviews.innerHTML = 'Offline mode! No cached reviews for this restaurant.';
     container.appendChild(noReviews);
-    return;
   }
 
   const ul = document.getElementById('reviews-list');
