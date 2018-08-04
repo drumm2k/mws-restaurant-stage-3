@@ -1,38 +1,37 @@
-# Local Development API Server
+# Mobile Web Specialist certification course
+## About
+For the Restaurant Reviews projects I converted a static webpage to a mobile-ready web application.
+### Stage 1 🚀
+At this stage I was given static design, looks like it was made by a six grader, btw i think it is hard to replicate code like this.
+I converted design to suit all screen sizes with mobile-first approach, fixed style issues. All of this was done with WAI-ARIA in mind, so this web application is more accessible to people with disabilities. Also service worker was added, for basic offline experience.
+
+### Stage 2 🚀
+At this stage I was given backend server based on Sails.js.
+I connected app to an external server using asynchronous JS to request JSON data of restaurants data and reviews, then stored this data in an offline database using IndexedDB, which create an app shell architecture.
+Finally optimized app to meet performance benchmarks requirements using Lighthouse:
+
+Progressive Web App ≥ 90 (app scores 91).
+
+Performance ≥ 70 (app scores 87).
+
+Accessibility ≥ 90 (app scores 94).
+
+### Stage 3 🚀
+At this stage I was given backend server with updated functionality.
+I added a form to allow users to create their own reviews and a favorite toggle, so users are able to mark a restaurants they like. If the app is offline, all data stored in a database until a connection is established, so it's fully functional without connection.
+Finally optimized app to meet even stricter performance benchmarks requirements using Lighthouse:
+
+Progressive Web App ≥ 90 (app scores 91, no https).
+
+Performance ≥ 90 (app scores 96).
+
+Accessibility ≥ 90 (app scores 100).
+
 ## Usage
-#### Get Restaurants
-```
-curl "http://localhost:1337/restaurants"
-```
-#### Get Restaurants by id
-````
-curl "http://localhost:1337/restaurants/{3}"
-````
-
-## Architecture
-Local server
-- Node.js
-- Sails.js
-
-## Contributors
-
-- [Brandy Lee Camacho - Technical Project Manager](mailto:brandy.camacho@udacity.com)
-- [David Harris - Web Services Lead](mailto:david.harris@udacity.com)
-- [Omar Albeik - Frontend engineer](mailto:omaralbeik@gmail.com)
-
-## Getting Started
-
-### Development local API Server
-_Location of server = /server_
-Server depends on [node.js LTS Version: v6.11.2 ](https://nodejs.org/en/download/), [npm](https://www.npmjs.com/get-npm), and [sails.js](http://sailsjs.com/)
-Please make sure you have these installed before proceeding forward.
-
-Great, you are ready to proceed forward; awesome!
-
-Let's start with running commands in your terminal, known as command line interface (CLI)
-
-###### Install project dependancies
-```Install project dependancies
+### Backend
+Navigate to /backend folder and execute
+###### Install project dependencies
+```Install project dependencies
 # npm i
 ```
 ###### Install Sails.js globally
@@ -41,105 +40,28 @@ Let's start with running commands in your terminal, known as command line interf
 ```
 ###### Start the server
 ```Start server
-# node server
-```
-### You should now have access to your API server environment
-debug: Environment : development
-debug: Port        : 1337
-
-
-## Endpoints
-
-### GET Endpoints
-
-#### Get all restaurants
-```
-http://localhost:1337/restaurants/
+# npm start
 ```
 
-#### Get favorite restaurants
+### Frontend
+Navigate to /frontend folder
+###### Edit /src/js/main.js and add Mapbox accessToken in initMap()
 ```
-http://localhost:1337/restaurants/?is_favorite=true
+# accessToken = ''
 ```
-
-#### Get a restaurant by id
+###### Edit /src/js/restaurant_info.js and add Mapbox accessToken in initMap()
 ```
-http://localhost:1337/restaurants/<restaurant_id>
+# accessToken = ''
 ```
-
-#### Get all reviews for a restaurant
+###### Install project dependencies
+```Install project dependencies
+# npm i
 ```
-http://localhost:1337/reviews/?restaurant_id=<restaurant_id>
+###### Build the project
+```Build the project
+# npm run build
 ```
-
-#### Get all restaurant reviews
+###### Start frontend
+```Start frontend
+# npm start
 ```
-http://localhost:1337/reviews/
-```
-
-#### Get a restaurant review by id
-```
-http://localhost:1337/reviews/<review_id>
-```
-
-#### Get all reviews for a restaurant
-```
-http://localhost:1337/reviews/?restaurant_id=<restaurant_id>
-```
-
-
-### POST Endpoints
-
-#### Create a new restaurant review
-```
-http://localhost:1337/reviews/
-```
-
-###### Parameters
-```
-{
-    "restaurant_id": <restaurant_id>,
-    "name": <reviewer_name>,
-    "rating": <rating>,
-    "comments": <comment_text>
-}
-```
-
-
-### PUT Endpoints
-
-#### Favorite a restaurant
-```
-http://localhost:1337/restaurants/<restaurant_id>/?is_favorite=true
-```
-
-#### Unfavorite a restaurant
-```
-http://localhost:1337/restaurants/<restaurant_id>/?is_favorite=false
-```
-
-#### Update a restaurant review
-```
-http://localhost:1337/reviews/<review_id>
-```
-
-###### Parameters
-```
-{
-    "name": <reviewer_name>,
-    "rating": <rating>,
-    "comments": <comment_text>
-}
-```
-
-
-### DELETE Endpoints
-
-#### Delete a restaurant review
-```
-http://localhost:1337/reviews/<review_id>
-```
-
-
-If you find a bug in the source code or a mistake in the documentation, you can help us by
-submitting an issue to our [Waffle Dashboard](https://waffle.io/udacity/mwnd-issues). Even better you can submit a Pull Request with a fix :)
