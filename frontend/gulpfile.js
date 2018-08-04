@@ -1,7 +1,6 @@
 'use strict';
 
 const gulp = require('gulp');
-const sass = require('gulp-sass'); // Sass plugin for Gulp
 const plumber = require('gulp-plumber'); // Prevent pipe breaking caused by errors from gulp plugins
 const postcss = require('gulp-postcss'); // PostCSS gulp plugin to pipe CSS through several plugins, but parse CSS only once.
 const autoprefixer = require('autoprefixer'); // Parse CSS and add vendor prefixes to rules by Can I Use
@@ -21,9 +20,9 @@ const critical = require('critical'); // Generate & Inline Critical-path CSS
 // Cook CSS
 //
 gulp.task('style', function() {
-  return gulp.src('src/sass/styles.scss')
+  return gulp.src(['src/css/styles.css', 'src/css/normalize.css'])
     .pipe(plumber())
-    .pipe(sass())
+    .pipe(concat('styles.css'))
     .pipe(postcss([
       autoprefixer({browsers: [
         'last 2 version',
@@ -112,7 +111,7 @@ gulp.task('serve', function() {
   gulp.watch('src/js/*.js', gulp.series(['js', 'js_rest']));
   gulp.watch('src/*.html', gulp.series('copy_html'));
   gulp.watch('build/*.html').on('change', server.reload);
-  gulp.watch('src/sass/**/*.{scss,sass}', gulp.series('style'));
+  gulp.watch('src/css/styles.css', gulp.series('style'));
 });
 
 // Copy HTML
