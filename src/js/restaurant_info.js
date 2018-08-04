@@ -213,7 +213,7 @@ const fillReviewsHTML = (reviews = self.reviews) => {
   });
 
   //if offline check reviews in localstore
-  if (!navigator.onLine) {
+  if (!navigator.onLine && localStorage.length != 0) {
     for (var key in localStorage) {
       if(localStorage.hasOwnProperty(key)){
         if (localStorage[key] !== null && key.startsWith('reviewOffline')) {
