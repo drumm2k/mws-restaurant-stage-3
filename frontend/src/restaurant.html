@@ -21,9 +21,11 @@
     </nav>
     <a href="#restaurant-container" class="skip-map" alt="Skip Google Map">Skip Google Map</a>
     <!-- Beginning breadcrumb -->
-    <ul id="breadcrumb" role="navigation" aria-label="Breadcrumb">
-      <li><a href="/" alt="Home">Home</a></li>
-    </ul>
+    <div class="breadcrumb-container">
+      <ul id="breadcrumb" role="navigation" aria-label="Breadcrumb">
+        <li><a href="/" alt="Home">Home</a></li>
+      </ul>
+    </div>
     <!-- End breadcrumb -->
     <!-- End nav -->
   </header>
@@ -31,11 +33,6 @@
 
   <!-- Beginning main -->
   <main id="maincontent">
-    <!-- Beginning map -->
-    <section id="map-container" title="Google Maps" role="application">
-      <div id="map"></div>
-    </section>
-    <!-- End map -->
     <!-- Beginning restaurant -->
     <section id="restaurant-container">
       <h1 id="restaurant-name" tabindex="0"></h1>
@@ -48,6 +45,11 @@
       <table id="restaurant-hours" tabindex="0"></table>
     </section>
     <!-- End restaurant -->
+    <!-- Beginning map -->
+    <section id="map-container" title="Google Maps" role="application">
+      <div id="map"></div>
+    </section>
+    <!-- End map -->
     <!-- Add review form -->
     <section id="review-container">
       <h2 tabindex="0">Add Review</h2>
