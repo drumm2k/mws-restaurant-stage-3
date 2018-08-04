@@ -213,11 +213,17 @@ const fillReviewsHTML = (reviews = self.reviews) => {
 
   //if offline check reviews in localstore
   if (!navigator.onLine && localStorage.length != 0) {
+    const id = getParameterByName('id');
+
     for (var key in localStorage) {
       if(localStorage.hasOwnProperty(key)){
         if (localStorage[key] !== null && key.startsWith('reviewOffline')) {
           let reviewLocal = JSON.parse(localStorage.getItem(key));
-          ul.appendChild(createReviewHTML(reviewLocal, true));
+
+          //check if restaurant id same as review in localstorage
+          if (id == reviewLocal.restaurant_id) {
+            ul.appendChild(createReviewHTML(reviewLocal, true));
+          }
         }
       }
     }
