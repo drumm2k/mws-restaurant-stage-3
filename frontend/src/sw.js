@@ -1,6 +1,6 @@
 'use strict';
 
-let cacheAppName = 'rest-reviews-v7';
+let cacheAppName = 'rest-reviews-v8';
 let cacheAppFiles = [
   './',
   './index.html',
@@ -30,9 +30,6 @@ let cacheAppFiles = [
   './img/9-400.jpg',
   './img/10-400.jpg',
   './img/nophoto.jpg',
-  './img/map/map-placeholder-sm.jpg',
-  './img/map/map-placeholder-mid.jpg',
-  './img/map/map-placeholder-big.jpg',
   './icons/favicon.png',
   './icons/icon-128.png',
   './icons/icon-196.png',
