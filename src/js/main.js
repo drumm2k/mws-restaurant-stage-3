@@ -15,8 +15,11 @@ document.addEventListener('DOMContentLoaded', (e) => {
   fetchNeighborhoods();
   fetchCuisines();
   updateRestaurants();
-  
-  //Listen Map clicks and Selects to init Map
+
+  //if localstorage not empty add eventlistner to send data when online
+  if (localStorage.length != 0) DBHelper.sendDataWhenOnline();
+
+  //listen map clicks and selects to init map
   document.getElementById('map').addEventListener('click', (e) => {
     initMap();
   }, {once: true});
@@ -152,8 +155,8 @@ const fillRestaurantsHTML = (restaurants = self.restaurants) => {
   });
   if (isMapLoaded) addMarkersToMap();
 
-    //Lazyload IMG's
-    let myLazyLoad = new LazyLoad();
+  //Lazyload IMG's
+  let myLazyLoad = new LazyLoad();
 }
 
 /**

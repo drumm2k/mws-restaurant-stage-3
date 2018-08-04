@@ -53,7 +53,7 @@ class DBHelper {
               })
           })
           .catch(error => {
-            console.log('[DB] Restaurants Fetch Error ' + error);
+            console.log('Restaurants fetch error: ' + error);
           })
       })
   }
@@ -82,7 +82,7 @@ class DBHelper {
           return callback(null, reviews);
       })
       .catch(error => {
-        console.log('[DB] Fetch Error, Loading Offlie Reviews ' + error);
+        console.log('Review fetch by ID error: ' + error);
         return DBHelper.getDbObjectByID('reviews', 'byRestaurantId', id)
           .then(reviews => {
             return callback(null, reviews);
@@ -95,9 +95,20 @@ class DBHelper {
    */
   static sendReview(review) {
     if (!navigator.onLine) {
-      localStorage.setItem('reviewOffline', JSON.stringify(review));
-      console.log('Offline review added to Local Storage');
-      DBHelper.sendReviewOnline();
+      //count offline reviews in localstorage
+      let reviewOfflineCounter = 1;
+      for (var key in localStorage) {
+        if(localStorage.hasOwnProperty(key)){
+          if (localStorage[key] !== null && key.startsWith('reviewOffline')) {
+            reviewOfflineCounter++;
+          }
+        }
+      }
+
+      //add review to localstorage and add eventlistner to send when online
+      localStorage.setItem('reviewOffline' + reviewOfflineCounter, JSON.stringify(review));
+      console.log('Offline, review saved local and will sync later');
+      DBHelper.sendDataWhenOnline();
       return;
     }
 
@@ -110,31 +121,13 @@ class DBHelper {
       if (contentType && contentType.indexOf('application/json') !== -1) {
         return response.json();
       } else {
-        return 'Success'
+        return 'Success';
       }
-    }).catch(error => console.log('Review Send error: ' + error));
+    }).catch(error => console.log('Review fetch error: ' + error));
   }
 
   /**
-   * Send review when online
-   */
-  static sendReviewOnline() {
-    window.addEventListener('online', () => {
-      let reviewOffline = JSON.parse(localStorage.getItem('reviewOffline'));
-      [...document.querySelectorAll('.reviews-offline')].forEach(element => {
-        element.remove();
-      })
-
-      if (reviewOffline !== null) {
-        DBHelper.sendReview(reviewOffline);
-        localStorage.removeItem('reviewOffline');
-        console.log('Offline review sent')
-      }
-    });
-  }
-
-  /**
-   * Get object from DB by ID
+   * Get object from IndexedDB by ID
    */
   static getDbObjectByID(table, index, id) {
     return this.dbPromise().then(db => {
@@ -151,22 +144,80 @@ class DBHelper {
    * Update Favorite by ID
    */
   static updateFav(id, fav) {
+    if (!navigator.onLine) {
+      let favOffline = {
+        restaurant_id: id,
+        is_favorite: fav
+      };
+
+      localStorage.setItem('favoriteOffline' + id, JSON.stringify(favOffline));
+      console.log('Offline, restaurant ' + id + ' favorite status updated and will sync later');
+      DBHelper.sendDataWhenOnline();
+      DBHelper.updateFavInDB(id, fav);
+      return;
+    }
+
     fetch(`${DBHelper.DATABASE_URL}restaurants/${id}/?is_favorite=${fav}`, {
       method: 'PUT'
     }).then(() => {
-      this.dbPromise()
-        .then(db => {
-          if(!db) return;
+      DBHelper.updateFavInDB(id, fav);
+    }).catch(error => console.log('Favorite fetch error: ' + error));
+  }
 
-          let tx = db.transaction('restaurants', 'readwrite');
-          const restStore = tx.objectStore('restaurants');
+  /**
+   * Change favorite status in IndexedDB
+   */
+  static updateFavInDB(id, fav) {
+    this.dbPromise().then(db => {
+      if(!db) return;
 
-          restStore.get(id)
-            .then(restaurant => {
-              restaurant.is_favorite = fav;
-              restStore.put(restaurant);
-            })
+      let tx = db.transaction('restaurants', 'readwrite');
+      const restStore = tx.objectStore('restaurants');
+
+      restStore.get(id)
+        .then(restaurant => {
+          restaurant.is_favorite = fav;
+          restStore.put(restaurant);
         })
+    })
+  }
+
+  /**
+   * Eventlistner for Online status, updating favorite status and sending reviews
+   */
+  static sendDataWhenOnline() { 
+    window.addEventListener('online', () => {
+      //loop through localstorage items
+      for (var key in localStorage) {
+        if(localStorage.hasOwnProperty(key)){
+          //update favorites
+          if (localStorage[key] !== null && key.startsWith('favoriteOffline')) {
+            //get favorite from localstorage
+            let favOffline = JSON.parse(localStorage[key]);
+
+            //send it to backend and remove
+            DBHelper.updateFav(favOffline.restaurant_id, favOffline.is_favorite);
+            localStorage.removeItem(key);
+            console.log('Online, favorite for restaurant ' + favOffline.restaurant_id + ' updated')
+          }
+
+          //update reviews
+          if (localStorage[key] !== null && key.startsWith('reviewOffline')) {
+            //remove offline indicator
+            [...document.querySelectorAll('.reviews-offline')].forEach(element => {
+              element.remove();
+            })
+
+            //get review from localstorage
+            let reviewOffline = JSON.parse(localStorage[key]);
+
+            //send it to backend and remove
+            DBHelper.sendReview(reviewOffline);
+            localStorage.removeItem(key);
+            console.log('Online, review sent')
+          }
+        }
+      }
     })
   }
 

@@ -3,6 +3,9 @@
 let restaurant;
 let map;
 
+//if localstorage not empty add eventlistner to send data when online
+if (localStorage.length != 0) DBHelper.sendDataWhenOnline();
+
 /**
  * Initialize Google map, called from HTML.
  */
@@ -209,14 +212,17 @@ const fillReviewsHTML = (reviews = self.reviews) => {
     ul.appendChild(createReviewHTML(review));
   });
 
-  //check localstorage for offline review
-  let reviewLocal = JSON.parse(localStorage.getItem('reviewOffline'));
-
-  if (reviewLocal !== null) {
-    ul.appendChild(createReviewHTML(reviewLocal, true));
-    DBHelper.sendReviewOnline();
+  //if offline check reviews in localstore
+  if (!navigator.onLine) {
+    for (var key in localStorage) {
+      if(localStorage.hasOwnProperty(key)){
+        if (localStorage[key] !== null && key.startsWith('reviewOffline')) {
+          let reviewLocal = JSON.parse(localStorage.getItem(key));
+          ul.appendChild(createReviewHTML(reviewLocal, true));
+        }
+      }
+    }
   }
-
   container.appendChild(ul);
 }
 
