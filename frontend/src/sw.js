@@ -1,6 +1,6 @@
 'use strict';
 
-let cacheAppName = 'rest-reviews-v8';
+let cacheAppName = 'rest-reviews-v9';
 let cacheAppFiles = [
   './',
   './index.html',
@@ -35,7 +35,9 @@ let cacheAppFiles = [
   './icons/icon-196.png',
   './icons/icon-512.png',
   './img/icons/favorite.svg',
-  './img/icons/favorite_true.svg'
+  './img/icons/favorite_true.svg',
+  './img/icons/marker-icon.png',
+  './img/icons/marker-shadow.png'
 ];
 
 self.addEventListener('install', e => {
