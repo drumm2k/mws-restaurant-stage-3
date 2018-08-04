@@ -1,28 +1,23 @@
 {
-  "name": "Restaurant-Reviews",
-  "private": true,
-  "version": "0.0.0",
-  "description": "a Sails application",
-  "keywords": [],
-  "dependencies": {
-    "include-all": "^1.0.0",
-    "rc": "^1.2.8",
-    "sails": "^0.12.13",
-    "sails-disk": "~0.10.9"
-  },
+  "name": "restaurantreviews",
+  "version": "1.0.0",
+  "description": "Restaurant Reviews app",
+  "main": "gulpfile.js",
   "scripts": {
-    "back": "node server",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp build",
     "front": "gulp serve"
   },
-  "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/brandy/Restaurant-Reviews.git"
+    "url": "git://github.com/drumm2k/mws-restaurant-stage-3.git"
   },
-  "author": "Brandy Lee Camacho",
-  "linkedIn": "https://www.linkedin.com/in/brandycamacho/",
-  "email": "brandy@udacity.com",
+  "author": "Ruslan Dzyubanov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drumm2k/mws-restaurant-stage-3/issues"
+  },
+  "homepage": "https://github.com/drumm2k/mws-restaurant-stage-3#readme",
   "devDependencies": {
     "autoprefixer": "^8.6.3",
     "babel-core": "^6.26.3",
