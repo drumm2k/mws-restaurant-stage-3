@@ -183,42 +183,54 @@ class DBHelper {
   }
 
   /**
-   * Eventlistner for Online status, updating favorite status and sending reviews
+   * Eventlistner for Online status
    */
   static sendDataWhenOnline() { 
-    window.addEventListener('online', () => {
-      //loop through localstorage items
-      for (var key in localStorage) {
-        if(localStorage.hasOwnProperty(key)){
-          //update favorites
-          if (localStorage[key] !== null && key.startsWith('favoriteOffline')) {
-            //get favorite from localstorage
-            let favOffline = JSON.parse(localStorage[key]);
+    if(navigator.onLine) {
+      DBHelper.pushDataFromLocalStorage();
+    } 
+    else {
+      window.addEventListener('online', () => {
+         DBHelper.pushDataFromLocalStorage();
+      })
+    }
+  }
 
-            //send it to backend and remove
-            DBHelper.updateFav(favOffline.restaurant_id, favOffline.is_favorite);
-            localStorage.removeItem(key);
-            console.log('Online, favorite for restaurant ' + favOffline.restaurant_id + ' updated')
-          }
+  /**
+   * Pushing favorite status and sending reviews
+   */
+  static pushDataFromLocalStorage() {
+    //loop through localstorage items
+    for (var key in localStorage) {
+      if(localStorage.hasOwnProperty(key)){
+        //update favorites
+        if (localStorage[key] !== null && key.startsWith('favoriteOffline')) {
+          //get favorite from localstorage
+          let favOffline = JSON.parse(localStorage[key]);
 
-          //update reviews
-          if (localStorage[key] !== null && key.startsWith('reviewOffline')) {
-            //remove offline indicator
-            [...document.querySelectorAll('.reviews-offline')].forEach(element => {
-              element.remove();
-            })
+          //send it to backend and remove
+          DBHelper.updateFav(favOffline.restaurant_id, favOffline.is_favorite);
+          localStorage.removeItem(key);
+          console.log('Online, favorite for restaurant ' + favOffline.restaurant_id + ' updated')
+        }
 
-            //get review from localstorage
-            let reviewOffline = JSON.parse(localStorage[key]);
+        //update reviews
+        if (localStorage[key] !== null && key.startsWith('reviewOffline')) {
+          //remove offline indicator
+          [...document.querySelectorAll('.reviews-offline')].forEach(element => {
+            element.remove();
+          })
 
-            //send it to backend and remove
-            DBHelper.sendReview(reviewOffline);
-            localStorage.removeItem(key);
-            console.log('Online, review sent')
-          }
+          //get review from localstorage
+          let reviewOffline = JSON.parse(localStorage[key]);
+
+          //send it to backend and remove
+          DBHelper.sendReview(reviewOffline);
+          localStorage.removeItem(key);
+          console.log('Online, review sent')
         }
       }
-    })
+    }
   }
 
   /**
