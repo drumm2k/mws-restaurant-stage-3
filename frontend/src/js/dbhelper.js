@@ -293,7 +293,7 @@ class DBHelper {
       if (error) {
         callback(error, null);
       } else {
-        let results = restaurants
+        let results = restaurants;
         if (cuisine != 'all') { // filter by cuisine
           results = results.filter(r => r.cuisine_type == cuisine);
         }
@@ -358,14 +358,20 @@ class DBHelper {
   /**
    * Map marker for a restaurant.
    */
-  static mapMarkerForRestaurant(restaurant, map) {
-    const marker = new google.maps.Marker({
-      position: restaurant.latlng,
+  static mapMarkerForRestaurant(restaurant) {
+    let icon = L.icon({
+      iconUrl: 'img/icons/marker-icon.png',
+      shadowUrl: 'img/icons/marker-shadow.png',
+    });
+
+    const marker = new L.marker([restaurant.latlng.lat, restaurant.latlng.lng], {
       title: restaurant.name,
-      url: DBHelper.urlForRestaurant(restaurant),
-      map: map,
-      animation: google.maps.Animation.DROP}
-    );
+      alt: restaurant.name,
+      icon: icon,
+      url: DBHelper.urlForRestaurant(restaurant)
+    });
+
+    marker.addTo(myMap);
     return marker;
   }
 

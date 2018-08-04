@@ -20,7 +20,7 @@ const critical = require('critical'); // Generate & Inline Critical-path CSS
 // Cook CSS
 //
 gulp.task('style', function() {
-  return gulp.src(['src/css/styles.css', 'src/css/normalize.css'])
+  return gulp.src(['src/css/styles.css', 'src/css/normalize.css', 'src/css/leaflet.css'])
     .pipe(plumber())
     .pipe(concat('styles.css'))
     .pipe(postcss([
@@ -87,8 +87,7 @@ gulp.task('utility', function() {
     'src/*.html',
     'src/manifest.json',
     'src/icons/*.png',
-    'src/img/map/*.jpg',
-    'src/img/icons/*.svg'
+    'src/img/icons/*.*'
   ], {base: 'src'})
     .pipe(gulp.dest('build'))
     .pipe(server.stream());

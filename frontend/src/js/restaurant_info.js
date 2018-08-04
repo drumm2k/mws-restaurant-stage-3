@@ -1,26 +1,37 @@
 'use strict'
 
 let restaurant;
-let map;
 
-//if localstorage not empty add eventlistner to send data when online
-if (localStorage.length != 0) DBHelper.sendDataWhenOnline();
+document.addEventListener('DOMContentLoaded', (e) => {  
+  initMap();
+
+  //if localstorage not empty add eventlistner to send data when online
+  if (localStorage.length != 0) DBHelper.sendDataWhenOnline();
+});
 
 /**
- * Initialize Google map, called from HTML.
+ * Initialize Leaflet map
  */
-window.initMap = () => {
+var initMap = () => {
   fetchRestaurantFromURL((error, restaurant) => {
     if (error) { // Got an error!
       console.error(error);
     } else {
-      self.map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
-        center: restaurant.latlng,
-        scrollwheel: false
-      });
+      self.myMap = L.map('map', {
+        center: [restaurant.latlng.lat, restaurant.latlng.lng],
+        zoom: 16
+      })
+    
+      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={accessToken}', {
+        attribution: '',
+        maxZoom: 18,
+        id: 'mapbox.streets',
+        accessToken: ''
+      }).addTo(myMap);
+
+      myMap.scrollWheelZoom.disable();
       fillBreadcrumb();
-      DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
+      DBHelper.mapMarkerForRestaurant(self.restaurant);
     }
   });
 }
