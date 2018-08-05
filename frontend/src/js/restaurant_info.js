@@ -282,9 +282,20 @@ const createReviewHTML = (review, offline) => {
  */
 const fillBreadcrumb = (restaurant = self.restaurant) => {
   const breadcrumb = document.getElementById('breadcrumb');
+
+  const ul = document.createElement('ul');
+
+  const li = document.createElement('li');
+  const link = document.createElement('a');
+  link.innerHTML = 'Home';
+  link.href = '/';
+  li.appendChild(link);
+  ul.appendChild(li);
+
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
-  breadcrumb.appendChild(li);
+  ul.appendChild(li);
+  breadcrumb.appendChild(ul);
 }
 
 /**

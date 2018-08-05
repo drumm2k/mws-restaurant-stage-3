@@ -83,18 +83,20 @@ nav h1 a {
   padding: 20px;
 }
 
-.breadcrumb-container {
+#breadcrumb {
+  height: 40px;
   max-width: 100%;
   background-color: #eee;
 }
 
-#breadcrumb {
+#breadcrumb ul {
     padding: 10px 0;
     list-style: none;
     font-size: 17px;
     width: 100%;
     max-width: 660px;
     margin: 0 auto;
+    text-align: left;
 }
 
 /* Display list items side by side */
