@@ -90,37 +90,37 @@ nav h1 a {
 }
 
 #breadcrumb ul {
-    padding: 10px 0;
-    list-style: none;
-    font-size: 17px;
-    width: 100%;
-    max-width: 660px;
-    margin: 0 auto;
-    text-align: left;
+  padding: 10px 0;
+  list-style: none;
+  font-size: 17px;
+  width: 100%;
+  max-width: 660px;
+  margin: 0 auto;
+  text-align: left;
 }
 
 /* Display list items side by side */
 #breadcrumb li {
-    display: inline;
+  display: inline;
 }
 
 /* Add a slash symbol (/) before/behind each list item */
 #breadcrumb li+li:before {
-    padding: 8px;
-    color: black;
-    content: "/\00a0";
+  padding: 8px;
+  color: black;
+  content: "/\00a0";
 }
 
 /* Add a color to all links inside the list */
 #breadcrumb li a {
-    color: #515b60;
-    text-decoration: none;
+  color: #515b60;
+  text-decoration: none;
 }
 
 /* Add a color on mouse-over */
 #breadcrumb li a:hover {
-    color: #263238;
-    text-decoration: underline;
+  color: #263238;
+  text-decoration: underline;
 }
 /* ====================== Map ====================== */
 #map {
