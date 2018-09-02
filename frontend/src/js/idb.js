@@ -307,8 +307,7 @@
   if (typeof module !== 'undefined') {
     module.exports = exp;
     module.exports.default = module.exports;
-  }
-  else {
+  } else {
     self.idb = exp;
   }
 }());

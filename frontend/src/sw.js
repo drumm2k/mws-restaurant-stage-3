@@ -45,22 +45,22 @@ self.addEventListener('install', e => {
     caches.open(cacheAppName).then(cache => {
       return cache.addAll(cacheAppFiles);
     })
-  )
-})
+  );
+});
 
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys().then(cachesNames => {
       return Promise.all(
         cachesNames.filter(cachesName => {
-          return cachesName.startsWith('rest-reviews-') && cachesName != cacheAppName;
+          return cachesName.startsWith('rest-reviews-') && cachesName !== cacheAppName;
         }).map(cachesName => {
           return caches.delete(cachesName);
         })
-      )
+      );
     })
-  )
-})
+  );
+});
 
 self.addEventListener('fetch', e => {
   e.respondWith(
@@ -68,8 +68,8 @@ self.addEventListener('fetch', e => {
       if (response) return response;
       return fetch(e.request);
     })
-    .catch(err => {
-      console.log('[SW] Fetch Error', err);
-    })
-  )
-})
+      .catch(err => {
+        console.log('[SW] Fetch Error', err);
+      })
+  );
+});

@@ -13,11 +13,11 @@ document.addEventListener('DOMContentLoaded', (e) => {
   fetchNeighborhoods();
   fetchCuisines();
 
-  //init map
+  // init map
   initMap();
 
-  //if localstorage not empty add eventlistner to send data when online
-  if (localStorage.length != 0) DBHelper.sendDataWhenOnline();
+  // if localstorage not empty add eventlistner to send data when online
+  if (localStorage.length !== 0) DBHelper.sendDataWhenOnline();
 });
 
 /**
@@ -32,7 +32,7 @@ const fetchNeighborhoods = () => {
       fillNeighborhoodsHTML();
     }
   });
-}
+};
 
 /**
  * Set neighborhoods HTML.
@@ -45,7 +45,7 @@ const fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
     option.value = neighborhood;
     select.append(option);
   });
-}
+};
 
 /**
  * Fetch all cuisines and set their HTML.
@@ -59,7 +59,7 @@ const fetchCuisines = () => {
       fillCuisinesHTML();
     }
   });
-}
+};
 
 /**
  * Set cuisines HTML.
@@ -73,7 +73,7 @@ const fillCuisinesHTML = (cuisines = self.cuisines) => {
     option.value = cuisine;
     select.append(option);
   });
-}
+};
 
 /**
  * Initialize Google map, called from HTML.
@@ -82,18 +82,18 @@ const initMap = () => {
   self.myMap = L.map('map', {
     center: [40.704216, -73.975501],
     zoom: 12
-  })
+  });
 
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={accessToken}', {
     attribution: '',
     maxZoom: 18,
     id: 'mapbox.streets',
-    accessToken: ''
+    accessToken: 'pk.eyJ1IjoiZHJ1bW0iLCJhIjoiY2o0bjRiNXkzMXBwZDJxc2VmZDdoNTVrNiJ9.36r-6MC4X-OAfIr8vd7FEw'
   }).addTo(myMap);
 
   myMap.scrollWheelZoom.disable();
   updateRestaurants();
-}
+};
 
 /**
  * Update page and map for current restaurants.
@@ -115,8 +115,8 @@ const updateRestaurants = () => {
       resetRestaurants(restaurants);
       fillRestaurantsHTML();
     }
-  })
-}
+  });
+};
 
 /**
  * Clear current restaurants, their HTML and remove their map markers.
@@ -133,7 +133,7 @@ const resetRestaurants = (restaurants) => {
   }
   self.markers = [];
   self.restaurants = restaurants;
-}
+};
 
 /**
  * Create all restaurants HTML and add them to the webpage.
@@ -144,7 +144,7 @@ const fillRestaurantsHTML = (restaurants = self.restaurants) => {
     ul.append(createRestaurantHTML(restaurant));
   });
 
-  if (restaurants.length == 0) {
+  if (restaurants.length === 0) {
     const empty = document.createElement('h1');
     empty.innerHTML = 'No results found';
     empty.tabIndex = '0';
@@ -153,9 +153,9 @@ const fillRestaurantsHTML = (restaurants = self.restaurants) => {
   }
   addMarkersToMap();
 
-  //Lazyload IMG's
+  // Lazyload IMG's
   let myLazyLoad = new LazyLoad();
-}
+};
 
 /**
  * Create restaurant HTML.
@@ -168,7 +168,7 @@ const createRestaurantHTML = (restaurant) => {
 
   const source = document.createElement('source');
   source.media = '(min-width: 768px)';
-  if (restaurant.photograph == undefined) {
+  if (restaurant.photograph === undefined) {
     source.setAttribute('data-src', '/img/nophoto.jpg');
   } else {
     source.setAttribute('data-srcset', '/img/' + restaurant.photograph + '.jpg');
@@ -177,7 +177,7 @@ const createRestaurantHTML = (restaurant) => {
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  if (restaurant.photograph == undefined) {
+  if (restaurant.photograph === undefined) {
     image.setAttribute('data-src', '/img/nophoto.jpg');
   } else {
     image.setAttribute('data-src', '/img/' + restaurant.photograph + '-400.jpg');
@@ -195,21 +195,21 @@ const createRestaurantHTML = (restaurant) => {
   div.append(name);
 
   const fav = document.createElement('img');
-  fav.setAttribute('alt', `Favorite`);
+  fav.setAttribute('alt', 'Favorite');
   fav.className = 'restaurant-fav';
   fav.tabIndex = '0';
-  fav.onclick = function () {
+  fav.onclick = function() {
     if (typeof restaurant.is_favorite === 'string' && restaurant.is_favorite === 'true') {
       restaurant.is_favorite = true;
     }
     if (typeof restaurant.is_favorite === 'string' && restaurant.is_favorite === 'false') {
       restaurant.is_favorite = false;
     }
-    //update in DB and backend
+    // update in DB and backend
     DBHelper.updateFav(restaurant.id, !restaurant.is_favorite);
     restaurant.is_favorite = !restaurant.is_favorite;
     changeFav(fav, restaurant.is_favorite, restaurant.name);
-  }
+  };
   changeFav(fav, restaurant.is_favorite, restaurant.name);
   div.append(fav);
 
@@ -230,20 +230,20 @@ const createRestaurantHTML = (restaurant) => {
   li.append(more);
 
   return li;
-}
+};
 
 /**
  * Switch Favourite
  */
 const changeFav = (hrt, fav, name) => {
-  if (!fav || fav == 'false') {
+  if (!fav || fav === 'false') {
     hrt.setAttribute('src', '/img/icons/favorite.svg');
-    hrt.setAttribute('aria-label', 'Favorite ' + name + ' restaurant.')
+    hrt.setAttribute('aria-label', 'Favorite ' + name + ' restaurant.');
   } else {
     hrt.setAttribute('src', '/img/icons/favorite_true.svg');
-    hrt.setAttribute('aria-label', 'Unfavorite ' + name + ' restaurant.')
+    hrt.setAttribute('aria-label', 'Unfavorite ' + name + ' restaurant.');
   }
-}
+};
 
 /**
  * Add markers for current restaurants to the map.
@@ -252,13 +252,13 @@ const addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     // Add marker to the map
     const marker = DBHelper.mapMarkerForRestaurant(restaurant);
-    
+
     marker.on('click', function() {
       window.location = (this.options.url);
     });
     self.markers.push(marker);
   });
-}
+};
 
 /**
  * Register ServiceWorker.
@@ -266,8 +266,8 @@ const addMarkersToMap = (restaurants = self.restaurants) => {
 const registerServiceWorker = () => {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js')
-    .catch( err => {
-      console.log('[SW] Registration Failed', err);
-    });
+      .catch(err => {
+        console.log('[SW] Registration Failed', err);
+      });
   }
-}
+};
