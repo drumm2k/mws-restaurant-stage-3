@@ -1,6 +1,9 @@
 # Mobile Web Specialist certification course
 ## About
 For the Restaurant Reviews projects I converted a static webpage to a mobile-ready web application.
+
+![Desktop Screenshot](/screenshots/desktop.jpg)
+
 ### Stage 1 🚀
 At this stage I was given static design, looks like it was made by a six grader, btw i think it is hard to replicate code like this.
 I converted design to suit all screen sizes with mobile-first approach, fixed style issues. All of this was done with WAI-ARIA in mind, so this web application is more accessible to people with disabilities. Also service worker was added, for basic offline experience.
@@ -19,13 +22,21 @@ Accessibility ≥ 90 (app scores 94).
 ### Stage 3 🚀
 At this stage I was given backend server with updated functionality.
 I added a form to allow users to create their own reviews and a favorite toggle, so users are able to mark a restaurants they like. If the app is offline, all data stored in a database until a connection is established, so it's fully functional without connection.
+
+##### When app is offline store all comments locally
+![Lighthouse Audit](/screenshots/offline.png)
+
+##### When online pushing all offline comments to server
+![Lighthouse Audit](/screenshots/online.png)
+
 Finally optimized app to meet even stricter performance benchmarks requirements using Lighthouse:
 
-Progressive Web App ≥ 90 (app scores 91, no https).
+Progressive Web App ≥ 90 (app scores 92, no https).
 
-Performance ≥ 90 (app scores 96).
+Performance ≥ 90 (app scores 98).
 
 Accessibility ≥ 90 (app scores 100).
+![Lighthouse Audit](/screenshots/audit.png)
 
 ## Usage
 ### Backend

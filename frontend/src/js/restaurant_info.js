@@ -26,7 +26,7 @@ var initMap = () => {
         attribution: '',
         maxZoom: 18,
         id: 'mapbox.streets',
-        accessToken: 'pk.eyJ1IjoiZHJ1bW0iLCJhIjoiY2o0bjRiNXkzMXBwZDJxc2VmZDdoNTVrNiJ9.36r-6MC4X-OAfIr8vd7FEw'
+        accessToken: ''
       }).addTo(myMap);
 
       myMap.scrollWheelZoom.disable();
