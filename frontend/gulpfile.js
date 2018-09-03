@@ -98,8 +98,8 @@ gulp.task('serve', function() {
   server.init({
     server: 'build',
     middleware: [compression()],
-    //httpModule: 'http2',
-    //https: true,
+    // httpModule: 'http2',
+    // https: true,
     notify: false,
     open: true,
     ui: false
@@ -136,7 +136,7 @@ gulp.task('imgmin', function() {
         min: true
       }
     }))
-    .pipe(rename(function (path) {
+    .pipe(rename(function(path) {
       path.basename += '-400';
     }))
     .pipe(gulp.dest('build/img'));
@@ -151,20 +151,20 @@ gulp.task('pngmin', function() {
         compressionLevel: 5
       }
     }))
-    .pipe(gulp.dest('build/img'))
+    .pipe(gulp.dest('build/img'));
 });
 
 // Generate & Inline Critical-path CSS
 //
-gulp.task('critical', function (cb) {
+gulp.task('critical', function(cb) {
   return critical.generate({
-      inline: true,
-      base: 'src/',
-      src: 'index.html',
-      dest: '../build/index.html',
-      width: 320,
-      height: 480,
-      minify: true
+    inline: true,
+    base: 'src/',
+    src: 'index.html',
+    dest: '../build/index.html',
+    width: 320,
+    height: 480,
+    minify: true
   });
 });
 
